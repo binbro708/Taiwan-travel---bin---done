@@ -181,7 +181,6 @@ function getTourItem() {
   const id = location.href.split("=")[1];
   const city = location.href.split("=")[2];
   const citySelect = document.querySelector("#citySelect");
-  console.log(city);
 
   //要讓Taipei吃到city select的value
   axios
@@ -189,7 +188,6 @@ function getTourItem() {
       `https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot/${city}?%24format=JSON&$filter=contains(ScenicSpotID,'${id}')`
     )
     .then((res) => {
-      console.log(res.data);
 
       const thisData = res.data[0];
 

@@ -129,10 +129,13 @@ function renderSearchPage() {
 const txt = document.querySelector("#searchInput");
 const list = document.querySelector("#hotList");
 const send = document.querySelector("#searchIcon");
-const keyWordName = document.querySelector("#keyWordName");
 
 send.addEventListener("click", (e) => {
   const keyword = txt.value;
+  if(keyword==""){
+   alert("請輸入關鍵字")
+    return
+  }
   axios
     .get(
       `https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot?%24filter=contains(ScenicSpotName,'${keyword}')&%24format=JSON`,
@@ -144,9 +147,11 @@ send.addEventListener("click", (e) => {
       const thisData = res.data;
       str = "";
       thisData.forEach((i) => {
-        if (i.Picture.PictureUrl1 == undefined||i.OpenTime.length>=30) {
+        
+        if (i.Picture.PictureUrl1 == undefined||i.OpenTime== undefined||i.OpenTime.length>=30) {
           return;
         }
+
         str += `
             <div class="col">
             <div class="card shadow">
@@ -172,14 +177,16 @@ send.addEventListener("click", (e) => {
                   ></i>
                   <small>${i.Address}</small>
                 </div>
-                <a href="main.html?id=${i.ScenicSpotID}=${city}" class="stretched-link"></a>
+                <a href="main.html?id=${i.ScenicSpotID}" class="stretched-link"></a>
               </div>
             </div>
           </div>`;
       });
       list.innerHTML = str;
     });
+    
 });
+
 // -----關鍵字搜尋結束------
 //初始渲染
 function getTourList() {
